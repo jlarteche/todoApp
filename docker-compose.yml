@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  app:
+    image: jenkins/jenkins:lts-jdk11
+    ports:
+      - 8080:8080
+      - 3000:3000
+      - 50000:50000
+    working_dir: /
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    environment:
+      SQLITE_DB_LOCATION: /var/jenkins_home/todos
+
+volumes:
+  jenkins_home:
+    external: true
