@@ -3,13 +3,13 @@ const fs = require('fs');
 
 const ITEM = {
     id: '7aef3d7c-d301-4846-8358-2a91ec9d6be3',
-    name: 'Test',
+    name: 'TestArteche',
     completed: false,
 };
 
 beforeEach(() => {
     if (fs.existsSync('/etc/todos/todo.db')) {
-        fs.unlinkSync('/etc/todos/todo.db');
+       // fs.unlinkSync('/etc/todos/todo.db');
     }
 });
 
@@ -17,7 +17,7 @@ test('it initializes correctly', async () => {
     await db.init();
 });
 
-test('it can store and retrieve items', async () => {
+test('it can store and retrieve items, then removes it', async () => {
     await db.init();
 
     await db.storeItem(ITEM);
@@ -25,9 +25,10 @@ test('it can store and retrieve items', async () => {
     const items = await db.getItems();
     expect(items.length).toBe(1);
     expect(items[0]).toEqual(ITEM);
+    await db.removeItem(ITEM.id);
 });
 
-test('it can update an existing item', async () => {
+test('it can update an existing item, previously inserted and finally deleted', async () => {
     await db.init();
 
     const initialItems = await db.getItems();
@@ -43,6 +44,7 @@ test('it can update an existing item', async () => {
     const items = await db.getItems();
     expect(items.length).toBe(1);
     expect(items[0].completed).toBe(!ITEM.completed);
+    await db.removeItem(ITEM.id);
 });
 
 test('it can remove an existing item', async () => {
@@ -61,4 +63,5 @@ test('it can get a single item', async () => {
 
     const item = await db.getItem(ITEM.id);
     expect(item).toEqual(ITEM);
+    await db.removeItem(ITEM.id);
 });
