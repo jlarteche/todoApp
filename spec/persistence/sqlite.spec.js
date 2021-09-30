@@ -7,12 +7,6 @@ const ITEM = {
     completed: false,
 };
 
-beforeEach(() => {
-    if (fs.existsSync('/etc/todos/todo.db')) {
-       // fs.unlinkSync('/etc/todos/todo.db');
-    }
-});
-
 test('it initializes correctly', async () => {
     await db.init();
 });
