@@ -1,5 +1,5 @@
 pipeline {
-  agent none
+  agent { label 'nodo-principal' }
   stages {
     stage('1') {
       steps {
